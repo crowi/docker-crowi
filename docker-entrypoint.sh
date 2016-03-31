@@ -20,17 +20,13 @@ if [ "$1" == npm ]; then
 			echo >&2 'warging: both REDIS_PORT_6379_TCP_ADDR and REDIS_URL found'
 			echo >&2 "  Connectiong to REDIS_URL ($REDIS_URL)"
 			echo >&2 '  instead of linked Redis conatiner'
+		else
+			export REDIS_URL='redis://redis:6379'
 		fi
-	elif [ -z "$REDIS_URL" ]; then
-		echo >&2 'error: missing REDIS_PORT_6379_TCP_ADDR and REDIS_URL environment variables'
-		echo >&2 '  Please --link some_redis_container:redis or set an external redis'
-		echo >&2 '  with -e REDIS_URL=redis://hostname:port'
-		exit 1
 	fi
 
 	export MONGO_URI=${MONGO_URI:-mongodb://db:27017/}
 	export NODE_ENV=${NODE_ENV:-production}
-	export REDIS_URL=${REDIS_URL:-redis://redis:6379/}
 
 	if [ -z "$PASSWORD_SEED" ]; then
 		export PASSWORD_SEED=`head -c1M /dev/urandom | sha1sum | cut -d' ' -f1`
