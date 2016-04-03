@@ -13,8 +13,7 @@ RUN apt-get update \
 	&& cd /usr/src/app \
 	&& npm install --unsafe-perm
 
-RUN mkdir -p /data/uploads \
-	&& ln -s /data/uploads /usr/src/app/public/uploads
+RUN ln -s /data/uploads /usr/src/app/public/uploads
 
 COPY docker-entrypoint.sh /entrypoint.sh
 
