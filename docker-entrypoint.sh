@@ -29,8 +29,11 @@ if [ "$1" == npm ]; then
 	export MONGO_URI=${MONGO_URI:-mongodb://db:27017/}
 	export FILE_UPLOAD=${FILE_UPLOAD:-local}
 
-	if [ "$FILE_UPLOAD" = "local" -a  ! -d /data/uploads ]; then
+	if [ "$FILE_UPLOAD" = "local" ]; then
 		mkdir -p /data/uploads
+		if [ ! -d /usr/src/app/public/uploads ]; then
+			ln -s /data/uploads /usr/src/app/public/uploads
+		fi
 	fi
 
 	if [ -f /data/config ]; then
