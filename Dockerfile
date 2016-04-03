@@ -2,6 +2,8 @@ FROM node:latest
 
 MAINTAINER Bakudankun <bakudankun@gmail.com>
 
+ENV NODE_ENV production
+
 RUN apt-get update \
 	&& apt-get install -y libkrb5-dev \
 	&& rm -rf /var/lib/apt/lists/* \

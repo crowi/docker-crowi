@@ -26,7 +26,6 @@ if [ "$1" == npm ]; then
 	fi
 
 	export MONGO_URI=${MONGO_URI:-mongodb://db:27017/}
-	export NODE_ENV=${NODE_ENV:-production}
 
 	if [ -f /data/config ]; then
 		. /data/config
