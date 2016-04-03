@@ -11,9 +11,12 @@ RUN apt-get update \
 	&& cd /usr/src/app \
 	&& npm install --unsafe-perm
 
-WORKDIR /usr/src/app
+RUN mkdir -p /data/uploads \
+	&& ln -s /data/uploads /usr/src/app/public/uploads
 
 COPY docker-entrypoint.sh /entrypoint.sh
 
+VOLUME /data
+WORKDIR /usr/src/app
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["npm", "start"]
