@@ -28,8 +28,12 @@ if [ "$1" == npm ]; then
 	export MONGO_URI=${MONGO_URI:-mongodb://db:27017/}
 	export NODE_ENV=${NODE_ENV:-production}
 
+	if [ -f /data/config ]; then
+		. /data/config
+	fi
 	if [ -z "$PASSWORD_SEED" ]; then
 		export PASSWORD_SEED=`head -c1M /dev/urandom | sha1sum | cut -d' ' -f1`
+		echo "export PASSWORD_SEED=$PASSWORD_SEED" >> /data/config
 	fi
 
 fi
