@@ -29,6 +29,7 @@ if [ "$1" == npm ]; then
 	export MONGO_URI=${MONGO_URI:-mongodb://db:27017/}
 	export FILE_UPLOAD=${FILE_UPLOAD:-local}
 
+	# Create local directories for uploaded files
 	if [ "$FILE_UPLOAD" = "local" ]; then
 		mkdir -p /data/uploads
 		if [ ! -d /usr/src/app/public/uploads ]; then
@@ -36,6 +37,7 @@ if [ "$1" == npm ]; then
 		fi
 	fi
 
+	# Generate and store PASSWORD_SEED environment varaiable if not available
 	if [ -f /data/config ]; then
 		. /data/config
 	fi
