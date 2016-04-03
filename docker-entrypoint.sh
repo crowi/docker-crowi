@@ -9,7 +9,7 @@ if [ "$1" == npm ]; then
 			echo >&2 '  instead of linked MongoDB conatiner'
 		fi
 	elif [ -z "$MONGO_URI" ]; then
-		echo >&2 'error: missing DB_PORT_27017_TCP_ADDR and MONGODB_URI environment variables'
+		echo >&2 'error: missing DB_PORT_27017_TCP_ADDR and MONGO_URI environment variables'
 		echo >&2 '  Please --link some_mongdb_container:db or set an external db'
 		echo >&2 '  with -e MONGO_URI=mongodb://hostname:port'
 		exit 1
