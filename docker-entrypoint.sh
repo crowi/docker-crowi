@@ -12,7 +12,7 @@ if [ "$1" == npm ]; then
 	elif [ -z "$MONGO_URI" ]; then
 		echo >&2 'error: missing DB_PORT_27017_TCP_ADDR and MONGO_URI environment variables'
 		echo >&2 '  Please --link some_mongdb_container:db or set an external db'
-		echo >&2 '  with -e MONGO_URI=mongodb://hostname:port'
+		echo >&2 '  with -e MONGO_URI=mongodb://hostname:port/crowi'
 		exit 1
 	fi
 
@@ -22,11 +22,11 @@ if [ "$1" == npm ]; then
 			echo >&2 "  Connectiong to REDIS_URL ($REDIS_URL)"
 			echo >&2 '  instead of linked Redis conatiner'
 		else
-			export REDIS_URL='redis://redis:6379'
+			export REDIS_URL='redis://redis:6379/crowi'
 		fi
 	fi
 
-	export MONGO_URI=${MONGO_URI:-mongodb://db:27017/}
+	export MONGO_URI=${MONGO_URI:-mongodb://db:27017/crowi}
 	export FILE_UPLOAD=${FILE_UPLOAD:-local}
 
 	# Create local directories for uploaded files
