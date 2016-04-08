@@ -1,16 +1,18 @@
-FROM node:latest
+FROM node:5.10.1
 
 MAINTAINER Bakudankun <bakudankun@gmail.com>
 
+ENV CROWI_VERSION v1.3.1
 ENV NODE_ENV production
 
 RUN apt-get update \
 	&& apt-get install -y netcat libkrb5-dev \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& mkdir /usr/src/app \
-	&& curl -SL https://github.com/crowi/crowi/archive/master.tar.gz \
+	&& curl -SL https://github.com/crowi/crowi/archive/${CROWI_VERSION}.tar.gz \
 	| tar -xz -C /usr/src/app --strip-components 1 \
 	&& cd /usr/src/app \
+	&& sed -i -e 's/bower /bower --allow-root /g' package.json \
 	&& npm install --unsafe-perm
 
 COPY docker-entrypoint.sh /entrypoint.sh
