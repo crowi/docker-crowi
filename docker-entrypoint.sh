@@ -27,6 +27,15 @@ if [ "$1" == npm ]; then
 		fi
 	fi
 
+	export FILE_UPLOAD=${FILE_UPLOAD:-local}
+	if [ "$FILE_UPLOAD" = "local" ]; then
+		# Create local directory for uploaded files
+		mkdir -p /data/uploads
+		if [ ! -d /usr/src/app/public/uploads ]; then
+			ln -s /data/uploads /usr/src/app/public/uploads
+		fi
+	fi
+
 	GIVEN_SEED=$PASSWORD_SEED
 	PASSWORD_SEED=''
 	if [ -f /data/config ]; then
