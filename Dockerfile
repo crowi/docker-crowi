@@ -5,7 +5,7 @@ MAINTAINER Bakudankun <bakudankun@gmail.com>
 ENV NODE_ENV production
 
 RUN apt-get update \
-	&& apt-get install -y libkrb5-dev \
+	&& apt-get install -y netcat libkrb5-dev \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& mkdir /usr/src/app \
 	&& curl -SL https://github.com/crowi/crowi/archive/master.tar.gz \
