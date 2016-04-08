@@ -7,17 +7,19 @@ ENV NODE_ENV production
 
 RUN apt-get update \
 	&& apt-get install -y netcat libkrb5-dev \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& mkdir /usr/src/app \
+	&& rm -rf /var/lib/apt/lists/*
+
+RUN mkdir /usr/src/app \
 	&& curl -SL https://github.com/crowi/crowi/archive/${CROWI_VERSION}.tar.gz \
 	| tar -xz -C /usr/src/app --strip-components 1 \
-	&& cd /usr/src/app \
-	&& sed -i -e 's/bower /bower --allow-root /g' package.json \
-	&& npm install --unsafe-perm
+	&& sed -i -e 's/bower /bower --allow-root /g' /usr/src/app/package.json
+
+WORKDIR /usr/src/app
+
+RUN npm install --unsafe-perm
 
 COPY docker-entrypoint.sh /entrypoint.sh
 
 VOLUME /data
-WORKDIR /usr/src/app
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["npm", "start"]
