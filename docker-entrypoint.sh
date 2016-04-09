@@ -27,13 +27,25 @@ if [ "$1" == npm ]; then
 		fi
 	fi
 
-	# Generate and store PASSWORD_SEED environment varaiable if not available
+	GIVEN_SEED=$PASSWORD_SEED
+	PASSWORD_SEED=''
 	if [ -f /data/config ]; then
 		. /data/config
 	fi
-	if [ -z "$PASSWORD_SEED" ]; then
+	if [ -n "$GIVEN_SEED" -a "$PASSWORD_SEED" -ne "$GIVEN_SEED" ]; then
+		# A seed is given by command line, which is different from the content of /data/config.
+		# Adopt the given seed and store it to /data/config.
+		export PASSWORD_SEED=$GIVEN_SEED
+		printf 'export PASSWORD_SEED="%q"' "$PASSWORD_SEED" >> /data/config
+	elif [ -z "$PASSWORD_SEED" ]; then
+		# Neither command line nor /data/config give PASSWORD_SEED.
+		# Generate one and store it to /data/config.
 		export PASSWORD_SEED=`head -c1M /dev/urandom | sha1sum | cut -d' ' -f1`
-		echo "export PASSWORD_SEED=$PASSWORD_SEED" >> /data/config
+		printf 'export PASSWORD_SEED="%q"' "$PASSWORD_SEED" >> /data/config
+	else
+		# Only /data/config gives PASSWORD_SEED, or given seed matches the content of /data/config.
+		# The seed is already set to PASSWORD_SEED and /data/config, so nothing to do.
+		:
 	fi
 
 fi
