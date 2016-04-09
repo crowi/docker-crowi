@@ -1,4 +1,4 @@
-FROM node:5.10.1
+FROM node:4
 
 MAINTAINER Bakudankun <bakudankun@gmail.com>
 
