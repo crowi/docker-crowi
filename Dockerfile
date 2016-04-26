@@ -2,7 +2,7 @@ FROM node:4
 
 MAINTAINER Bakudankun <bakudankun@gmail.com>
 
-ENV CROWI_VERSION v1.3.1
+ENV CROWI_VERSION v1.4.0
 ENV NODE_ENV production
 
 RUN apt-get update \
@@ -11,8 +11,7 @@ RUN apt-get update \
 
 RUN mkdir /usr/src/app \
 	&& curl -SL https://github.com/crowi/crowi/archive/${CROWI_VERSION}.tar.gz \
-	| tar -xz -C /usr/src/app --strip-components 1 \
-	&& sed -i -e 's/bower /bower --allow-root /g' /usr/src/app/package.json
+	| tar -xz -C /usr/src/app --strip-components 1
 
 WORKDIR /usr/src/app
 
