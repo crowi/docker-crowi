@@ -41,7 +41,7 @@ if [ "$1" == npm ]; then
 	if [ -f /data/config ]; then
 		. /data/config
 	fi
-	if [ -n "$GIVEN_SEED" -a "$PASSWORD_SEED" -ne "$GIVEN_SEED" ]; then
+	if [ -n "$GIVEN_SEED" -a "$PASSWORD_SEED" != "$GIVEN_SEED" ]; then
 		# A seed is given by command line, which is different from the content of /data/config.
 		# Adopt the given seed and store it to /data/config.
 		export PASSWORD_SEED=$GIVEN_SEED
