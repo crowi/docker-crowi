@@ -3,7 +3,7 @@ set -e
 
 if [ "$1" == npm ]; then
 
-	if nc -z db 27017 &> /dev/null ; then
+	if wait-for-it.sh db:27017 ; then
 		if [ -n "$MONGO_URI" ]; then
 			echo >&2 'warning: both linked db container and MONGO_URI found'
 			echo >&2 "  Connectiong to MONGO_URI ($MONGO_URI)"
@@ -17,7 +17,7 @@ if [ "$1" == npm ]; then
 	fi
 	export MONGO_URI=${MONGO_URI:-mongodb://db:27017/crowi}
 
-	if nc -z redis 6379 &> /dev/null ; then
+	if wait-for-it.sh redis:6379 ; then
 		if [ -n "$REDIS_URL" ]; then
 			echo >&2 'warning: both linked redis container and REDIS_URL found'
 			echo >&2 "  Connectiong to REDIS_URL ($REDIS_URL)"
