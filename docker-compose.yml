@@ -11,6 +11,8 @@ services:
 
   mongo:
     image: mongo
+    volumes:
+      - ./data:/data/db
 
   redis:
     image: redis:alpine
