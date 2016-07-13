@@ -42,6 +42,8 @@ services:
 
 	mongo:
 		image: mongo
+    volumes:
+      - ./data:/data/db
 
 	redis:
 		image: redis:alpine
@@ -49,6 +51,15 @@ services:
 
 イメージをアップデートする場合は、アップデートするイメージを`docker pull`した後に`docker-compose up`します。
 
+
+#### Quick Start
+
+面倒な人は以下のようなコマンドを打つ事で実行する事が可能です。
+
+```
+$ wget https://raw.githubusercontent.com/Bakudankun/docker-crowi/master/docker-compose.yml
+$ docker-compose up
+```
 
 ## 環境変数
 
