@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  crowi:
+    image: bakudankun/crowi:1.4.0
+    links:
+      - mongo:db
+      - redis:redis
+    ports:
+      - 8080:3000
+
+  mongo:
+    image: mongo
+    volumes:
+      - ./data:/data/db
+
+  redis:
+    image: redis:alpine

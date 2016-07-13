@@ -26,25 +26,11 @@ docker run --name some-crowi -p 8080:3000 -d \
 
 ### [Docker Compose](https://docs.docker.com/compose/)を使う
 
-MongoDBのコンテナを`db`として、Redisのコンテナを`redis`としてリンクできるようにしてあるので、例えば以下のように`docker-compose.yml`を書き、`docker-compose up`を実行すれば`http://localhost:8080`にアクセスして使えるようになります。
+MongoDBのコンテナを`db`として、Redisのコンテナを`redis`としてリンクできるようにしてあるので、例えば`docker-compose.yml`を用いて、`docker-compose up`を実行すれば`http://localhost:8080`にアクセスして使えるようになります。
 
-```yaml
-version: '2'
-
-services:
-	crowi:
-		image: bakudankun/crowi:1.4.0
-		links:
-			- mongo:db
-			- redis:redis
-		ports:
-			- 8080:3000
-
-	mongo:
-		image: mongo
-
-	redis:
-		image: redis:alpine
+```
+$ wget https://raw.githubusercontent.com/Bakudankun/docker-crowi/master/docker-compose.yml
+$ docker-compose up -d
 ```
 
 イメージをアップデートする場合は、アップデートするイメージを`docker pull`した後に`docker-compose up`します。
