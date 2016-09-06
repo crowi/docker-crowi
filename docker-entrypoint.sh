@@ -27,6 +27,16 @@ if [ "$1" == npm ]; then
 		fi
 	fi
 
+	if wait-for-it.sh es:9200 ; then
+		if [ -n "$ELASTICSEARCH_URI" ]; then
+			echo >&2 'warning: both linked elasticsearch container and ELASTICSEARCH_URI found'
+			echo >&2 "  Connectiong to ELASTICSEARCH_URI ($ELASTICSEARCH_URI)"
+			echo >&2 '  instead of linked elasticsearch conatiner'
+		else
+			export ELASTICSEARCH_URI='http://es:9200'
+		fi
+	fi
+
 	export FILE_UPLOAD=${FILE_UPLOAD:-local}
 	if [ "$FILE_UPLOAD" = "local" ]; then
 		# Create local directory for uploaded files
