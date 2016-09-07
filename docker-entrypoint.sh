@@ -33,7 +33,7 @@ if [ "$1" == npm ]; then
 			echo >&2 "  Connectiong to ELASTICSEARCH_URI ($ELASTICSEARCH_URI)"
 			echo >&2 '  instead of linked elasticsearch conatiner'
 		else
-			export ELASTICSEARCH_URI='http://es:9200'
+			export ELASTICSEARCH_URI='http://es:9200/crowi'
 		fi
 	fi
 
