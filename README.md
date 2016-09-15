@@ -7,17 +7,18 @@
 
 ## サポートされるタグとその`Dockerfile`
 
-- [`1.4.0`, `1.4`, `1`, `latest` (Dockerfile)](https://github.com/Bakudankun/docker-crowi/blob/master/Dockerfile)
+- [`1.5.0`, `1.5`, `1`, `latest` (Dockerfile)](https://github.com/Bakudankun/docker-crowi/blob/master/Dockerfile)
 
 
 ## 利用方法
 
-### 既にMongoDBとRedisのサーバーがある場合
+### 既にMongoDBとRedisとElasticsearchのサーバーがある場合
 
 ```
 docker run --name some-crowi -p 8080:3000 -d \
 	-e MONGO_URI=mongodb://MONGODB_HOST:MONGODB_PORT/some-crowi \
 	-e REDIS_URL=redis://REDIS_HOST:REDIS_PORT/some-crowi \
+	-e ELASTICSEARCH_URI=http://ELASTICSEARCH_HOST:9200/some-crowi \
 	bakudankun/crowi
 ```
 
@@ -26,28 +27,34 @@ docker run --name some-crowi -p 8080:3000 -d \
 
 ### [Docker Compose](https://docs.docker.com/compose/)を使う
 
-MongoDBのコンテナを`db`として、Redisのコンテナを`redis`としてリンクできるようにしてあるので、例えば以下のように`docker-compose.yml`を書き、`docker-compose up`を実行すれば`http://localhost:8080`にアクセスして使えるようになります。
+MongoDBのコンテナを`db`として、Redisのコンテナを`redis`として、Elasticsearchのコンテナを`es`としてリンクできるようにしてあるので、例えば以下のように`docker-compose.yml`を書き、`docker-compose up`を実行すれば`http://localhost:8080`にアクセスして使えるようになります。
 
 ```yaml
 version: '2'
 
 services:
-	crowi:
-		image: bakudankun/crowi:1.4.0
-		links:
-			- mongo:db
-			- redis:redis
-		ports:
-			- 8080:3000
+  crowi:
+    image: bakudankun/crowi:1.5.0
+    links:
+      - mongo:db
+      - redis:redis
+      - elasticsearch:es
+    ports:
+      - 8080:3000
 
-	mongo:
-		image: mongo
+  mongo:
+    image: mongo
 
-	redis:
-		image: redis:alpine
+  redis:
+    image: redis:alpine
+
+  elasticsearch:
+    image: bakudankun/elasticsearch-crowi
 ```
 
-イメージをアップデートする場合は、アップデートするイメージを`docker pull`した後に`docker-compose up`します。
+CrowiでElasticsearchするにはプラグインの[Kuromoji](http://atilika.org/)が必要なので、KuromojiをインストールしたElasticsearchのイメージをこちらで用意して使用しています。
+
+コンテナのアップデートは`docker-compose pull && docker-compose up`で。
 
 
 ## 環境変数
@@ -55,7 +62,7 @@ services:
 - `PORT`: コンテナ側のポート。デフォルトは3000。普通弄る必要はありません。
 - `MONGO_URI`: MongoDBに接続するためのURI。`db`コンテナをリンクする場合は必要ありません。
 - `REDIS_URL`: Redisのセッションストアに接続するためのURI。`redis`コンテナをリンクする場合は必要ありません。無くても一応起動できますが非推奨です。
-- `ELASTICSEARCH_URI`: Elasticsearchでページ検索できるようにするためのURI。`es`コンテナをリンクする場合は必要ありません。無い場合は検索機能が無効になります。
+- `ELASTICSEARCH_URI`: Elasticsearchでページ検索できるようにするためのURI。`es`コンテナをリンクする場合は必要ありません。無い場合は検索機能が無効になります。プラグインのKuromojiが必要なことに注意してください。
 - `PASSWORD_SEED`: ユーザーのパスワードからハッシュを生成するときにつかう種です。指定しなくても自動生成します。これが変更されると既に登録しているユーザーがログインできなくなるので注意してください。
 - `SECRET_TOKEN`: 署名されたcookieを確認するための秘密鍵。
 - `FILE_UPLOAD`: デフォルトで`local`になっています。`aws`や`none`を指定できます。
