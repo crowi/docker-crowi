@@ -2,7 +2,7 @@ FROM node:4
 
 MAINTAINER Bakudankun <bakudankun@gmail.com>
 
-ENV CROWI_VERSION v1.5.0
+ENV CROWI_VERSION v1.5.1
 ENV NODE_ENV production
 
 RUN apt-get update \

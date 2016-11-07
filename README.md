@@ -7,7 +7,7 @@
 
 ## サポートされるタグとその`Dockerfile`
 
-- [`1.5.0`, `1.5`, `1`, `latest` (Dockerfile)](https://github.com/Bakudankun/docker-crowi/blob/master/Dockerfile)
+- [`1.5.1`, `1.5`, `1`, `latest` (Dockerfile)](https://github.com/Bakudankun/docker-crowi/blob/master/Dockerfile)
 
 
 ## 利用方法
@@ -18,7 +18,7 @@
 docker run --name some-crowi -p 8080:3000 -d \
 	-e MONGO_URI=mongodb://MONGODB_HOST:MONGODB_PORT/some-crowi \
 	-e REDIS_URL=redis://REDIS_HOST:REDIS_PORT/some-crowi \
-	-e ELASTICSEARCH_URI=http://ELASTICSEARCH_HOST:9200/some-crowi \
+	-e ELASTICSEARCH_URI=http://ELASTICSEARCH_HOST:ELASTICSEARCH_PORT/some-crowi \
 	bakudankun/crowi
 ```
 
@@ -34,7 +34,7 @@ version: '2'
 
 services:
   crowi:
-    image: bakudankun/crowi:1.5.0
+    image: bakudankun/crowi:latest
     links:
       - mongo:db
       - redis:redis
