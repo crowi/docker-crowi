@@ -49,10 +49,17 @@ services:
     image: redis:alpine
 
   elasticsearch:
-    image: bakudankun/elasticsearch-crowi
+    image: elasticsearch:2
+	# プラグインのKuromojiが必要
+    entrypoint:
+      - bash
+      - -c
+      - >-
+        bin/plugin list | grep -q analysis-kuromoji
+        || bin/plugin install analysis-kuromoji
+        && exec /docker-entrypoint.sh $$0 $$@
+    command: elasticsearch
 ```
-
-CrowiでElasticsearchするにはプラグインの[Kuromoji](http://atilika.org/)が必要なので、KuromojiをインストールしたElasticsearchのイメージをこちらで用意して使用しています。
 
 コンテナのアップデートは`docker-compose pull && docker-compose up`で。
 
