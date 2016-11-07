@@ -50,7 +50,7 @@ services:
 
   elasticsearch:
     image: elasticsearch:2
-	# プラグインのKuromojiが必要
+    # プラグインのKuromojiが必要
     entrypoint:
       - bash
       - -c
