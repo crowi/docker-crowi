@@ -7,7 +7,7 @@
 
 ## サポートされるタグとその`Dockerfile`
 
-- [`1.5.2`, `1.5`, `1`, `latest` (Dockerfile)](https://github.com/Bakudankun/docker-crowi/blob/master/Dockerfile)
+- [`1.5.3`, `1.5`, `1`, `latest` (Dockerfile)](https://github.com/Bakudankun/docker-crowi/blob/master/Dockerfile)
 
 
 ## 利用方法
