@@ -1,7 +1,5 @@
 FROM node:4
 
-MAINTAINER Bakudankun <bakudankun@gmail.com>
-
 ENV CROWI_VERSION v1.5.3
 ENV NODE_ENV production
 
