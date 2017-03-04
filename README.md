@@ -81,3 +81,39 @@ services:
 
 このボリュームが失われると`PASSWORD_SEED`が失われることにより管理者を含めた既存ユーザーがCrowiにログインできなくなるので注意してください。
 `PASSWORD_SEED`環境変数を指定するか、`docker run`時に`-v crowidata:/data`などとしておくと次のときも同様に起動できるので良いと思います。
+
+Docker Compose からボリュームをマウントするには `docker-compose.yml` へ以下のように `volumes` の定義を追加します。
+
+```yaml
+version: '2'
+
+services:
+  crowi:
+    image: bakudankun/crowi:latest
+    links:
+      - mongo:db
+      - redis:redis
+      - elasticsearch:es
+    ports:
+      - 8080:3000
+    volumes:
+      - "crowidata:/data"
+
+  mongo:
+    image: mongo
+
+  redis:
+    image: redis:alpine
+
+  elasticsearch:
+    image: elasticsearch:2
+    # プラグインのKuromojiが必要
+    entrypoint:
+      - bash
+      - -c
+      - >-
+        bin/plugin list | grep -q analysis-kuromoji
+        || bin/plugin install analysis-kuromoji
+        && exec /docker-entrypoint.sh $$0 $$@
+    command: elasticsearch
+```
