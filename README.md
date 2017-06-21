@@ -9,11 +9,14 @@
 ### 既にMongoDBとRedisとElasticsearchのサーバーがある場合
 
 ```
-docker run --name some-crowi -p 8080:3000 -d \
-	-e MONGO_URI=mongodb://MONGODB_HOST:MONGODB_PORT/some-crowi \
-	-e REDIS_URL=redis://REDIS_HOST:REDIS_PORT/some-crowi \
-	-e ELASTICSEARCH_URI=http://ELASTICSEARCH_HOST:ELASTICSEARCH_PORT/some-crowi \
-	bakudankun/crowi
+$ git clone https://github.com/crowi/docker-crowi.git
+$ cd docker-crowi
+$ docker build -t crowi:1.6.2 .
+$ docker run --name some-crowi -p 8080:3000 -d \
+  -e MONGO_URI=mongodb://MONGODB_HOST:MONGODB_PORT/some-crowi \
+  -e REDIS_URL=redis://REDIS_HOST:REDIS_PORT/some-crowi \
+  -e ELASTICSEARCH_URI=http://ELASTICSEARCH_HOST:ELASTICSEARCH_PORT/some-crowi \
+  crowi:1.6.2
 ```
 
 と実行し、`http://localhost:8080`にアクセスすると使えるようになります。たぶん。
