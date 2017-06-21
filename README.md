@@ -50,7 +50,7 @@ services:
   elasticsearch:
     # テスト用の設定
     # 正しい設定はElasticsearchのドキュメントを参照
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.4.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.4.2
     environment:
       # パスワードの入力を省略するためX-Packを切る
       - xpack.security.enabled=false
