@@ -1,6 +1,6 @@
 FROM node:6
 
-ENV CROWI_VERSION v1.6.2
+ENV CROWI_VERSION v1.6.3
 ENV NODE_ENV production
 
 RUN curl -SL -o /usr/local/bin/wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh \
