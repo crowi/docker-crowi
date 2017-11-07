@@ -11,12 +11,12 @@
 ```
 $ git clone https://github.com/crowi/docker-crowi.git
 $ cd docker-crowi
-$ docker build -t crowi:1.6.2 .
+$ docker build -t crowi:1.6.3 .
 $ docker run --name some-crowi -p 8080:3000 -d \
   -e MONGO_URI=mongodb://MONGODB_HOST:MONGODB_PORT/some-crowi \
   -e REDIS_URL=redis://REDIS_HOST:REDIS_PORT/some-crowi \
   -e ELASTICSEARCH_URI=http://ELASTICSEARCH_HOST:ELASTICSEARCH_PORT/some-crowi \
-  crowi:1.6.2
+  crowi:1.6.3
 ```
 
 と実行し、`http://localhost:8080`にアクセスすると使えるようになります。たぶん。
@@ -33,7 +33,7 @@ version: '3'
 services:
   crowi:
     build: .
-    image: crowi:1.6.2
+    image: crowi:1.6.3
     environment:
       - MATHJAX=1
       - PLANTUML_URI=http://localhost:18080
@@ -53,7 +53,7 @@ services:
   elasticsearch:
     # テスト用の設定
     # 正しい設定はElasticsearchのドキュメントを参照
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.4.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.4
     environment:
       # パスワードの入力を省略するためX-Packを切る
       - xpack.security.enabled=false
