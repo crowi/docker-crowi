@@ -16,6 +16,6 @@ RUN npm install --unsafe-perm
 
 COPY docker-entrypoint.sh /entrypoint.sh
 
-VOLUME /data
+#VOLUME /data
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["npm", "start"]

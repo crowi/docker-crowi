@@ -1,0 +1,51 @@
+# とりあえず全機能オンにして試しにローカルで使ってみる用の設定
+version: '3'
+
+services:
+  crowi:
+    build: .
+    image: crowi:1.6.3
+    environment:
+      - MATHJAX=1
+      - PLANTUML_URI=http://localhost:18080
+    links:
+      - mongo:db
+      - redis:redis
+      - elasticsearch:es
+    ports:
+      - 8080:3000
+    volumes:
+      - ./crowi/data:/data
+
+  mongo:
+    image: mongo:latest
+    volumes:
+      - ./mongo/dump:/dump
+
+  redis:
+    image: redis:alpine
+
+  elasticsearch:
+    # テスト用の設定
+    # 正しい設定はElasticsearchのドキュメントを参照
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.4
+    environment:
+      # パスワードの入力を省略するためX-Packを切る
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    # プラグインのKuromojiが必要
+    entrypoint:
+      - bash
+      - -c
+      - >-
+        elasticsearch-plugin list | grep -q analysis-kuromoji
+        || elasticsearch-plugin install analysis-kuromoji
+        && exec $$0 $$@
+    command:
+      - /bin/bash
+      - bin/es-docker
+
+  plantuml:
+    image: plantuml/plantuml-server:latest
+    ports:
+      - 18080:8080
