@@ -36,21 +36,17 @@ services:
     image: crowi:1.6.3
     environment:
       - MATHJAX=1
-      - PLANTUML_URI=http://localhost:18080
-    links:
-      - mongo:db
-      - redis:redis
-      - elasticsearch:es
+      - PLANTUML_URI=http://plantuml:8080
     ports:
       - 8080:3000
 
-  mongo:
+  db:
     image: mongo:latest
 
   redis:
     image: redis:alpine
 
-  elasticsearch:
+  es:
     # テスト用の設定
     # 正しい設定はElasticsearchのドキュメントを参照
     image: docker.elastic.co/elasticsearch/elasticsearch:5.6.4
@@ -72,8 +68,6 @@ services:
 
   plantuml:
     image: plantuml/plantuml-server:latest
-    ports:
-      - 18080:8080
 ```
 
 コンテナのアップデートは`docker-compose pull && docker-compose up`で。
