@@ -36,7 +36,7 @@ services:
     image: crowi:1.6.3
     environment:
       - MATHJAX=1
-      - PLANTUML_URI=http://plantuml:8080
+      - PLANTUML_URI=http://localhost:18080
     ports:
       - 8080:3000
 
@@ -68,6 +68,8 @@ services:
 
   plantuml:
     image: plantuml/plantuml-server:latest
+    ports:
+      - 18080:8080
 ```
 
 コンテナのアップデートは`docker-compose pull && docker-compose up`で。
